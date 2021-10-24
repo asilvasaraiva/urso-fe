@@ -25,7 +25,7 @@ class App extends React.Component {
             </a>
           </div>
         </div>
-        <div className="ui containner">
+        <div className="item" style={{alignItems:'center'}} >
          <Messages/>
         </div>
       </div>
