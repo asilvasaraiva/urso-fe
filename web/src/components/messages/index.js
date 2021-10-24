@@ -10,8 +10,10 @@ class Messages extends React.Component{
 fechLista
 
 async componentDidMount(){
-   const listMessages = await axios.get('http://localhost:3001/messages');
-   let newMsg = listMessages.data.filter(m=> m.isRead===false); 
+   const listMessages = await axios.get('http://localhost:8080/api/admin/messages');
+   console.log(listMessages);
+   let newMsg = listMessages.data.filter(m=> m.read===false); 
+   console.log(newMsg);
     this.setState({messages:listMessages.data,newMsg:newMsg.length});       
   }
 
