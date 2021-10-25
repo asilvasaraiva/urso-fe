@@ -25,8 +25,9 @@ class App extends React.Component {
             </a>
           </div>
         </div>
-        <div className="item" style={{alignItems:'center'}} >
-         <Messages/>
+        <div className="ui container" style={{alignItems:'center'}} >
+         <Users/>
+         {/* <Messages/> */}
         </div>
       </div>
 
