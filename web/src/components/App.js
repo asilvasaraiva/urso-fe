@@ -21,8 +21,7 @@ class App extends React.Component {
             <Route path="/profile" exact component={Profile} />
             <Route path="/users" exact component={Users} />
           </div>
-        </BrowserRouter>
-       
+        </BrowserRouter>       
         {/* <div className="ui container" style={{ alignItems: 'center' }} >
           <Users />
           <Messages/>
