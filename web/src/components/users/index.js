@@ -11,7 +11,7 @@ class Users extends React.Component {
 
   async componentDidMount() {
 
-    const listUsers = await axios.get('http://localhost:3001/users');
+    const listUsers = await axios.get('http://localhost:8080/api/users/');
     console.log(listUsers.data);
     this.setState({list:listUsers.data});
 
@@ -20,7 +20,7 @@ class Users extends React.Component {
 
   render() {
     return (
-      <div style={{ marginTop: '20px' }}>
+      <div>
         <div className="ui header">
           <i className="users  icon"></i>
           Gerenciar Usuários 

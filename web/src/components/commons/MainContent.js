@@ -1,8 +1,13 @@
 import React from 'react';
 
 class MainContent extends React.Component{
+
+  componentDidMount(props, children){
+
+  }
+
   render(){
-    return <div><h1>Main Content </h1></div>
+    return <div><h1>Conteúdo principal </h1></div>
   }
 }
 

@@ -43,12 +43,12 @@ const MessagesLists = (props) => {
     });
 
     return (
-        <div style={{ marginTop: '20px' }}>
+        <div className="">
             <div className="ui header">
                 <i className="envelope open icon"></i>
                 Todas as mensagens ({readMessages} mensagens não lidas)
             </div>
-            <div className="ui styled accordion" >{messages}</div>
+            <div className="ui ten wide styled fluid accordion " >{messages}</div>
         </div>
     );
 }

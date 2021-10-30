@@ -6,7 +6,11 @@ componentDidMount(){
     
 }
     render(){
-        return <div>Editar Usuário</div>
+        return (
+        <div className="ui header">
+            Editar Usuário            
+        </div>
+        );
     }
 }
 
