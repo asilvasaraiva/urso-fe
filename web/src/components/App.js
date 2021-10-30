@@ -1,39 +1,35 @@
 import React from 'react';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 import Users from './users';
 import Reports from './reports';
 import Profile from './profile';
 import Messages from './messages';
-import { Header, Footer } from './commons/';
+import { Header, Footer,SidePanel } from './commons/';
 import MainContent from './commons/MainContent';
 
 class App extends React.Component {
   render() {
     return (
-
       <div>
-        <div className="ui attached stackable menu">
-          <div className="ui container">
-            <a className="item">
-              <i className="home icon"></i> Home
-            </a>
-            <a className="item">
-              <i className="grid layout icon"></i> Browse
-            </a>
-            <a className="item">
-              <i className="mail icon"></i> Messages
-            </a>
+        <BrowserRouter>
+          <div>
+            <Header />
+            <SidePanel />
+            {/* <Route path="/" /> */}
+            <Route path="/messages" exact component={Messages} />
+            <Route path="/profile" exact component={Profile} />
+            <Route path="/users" exact component={Users} />
           </div>
-        </div>
-        <div className="ui container" style={{alignItems:'center'}} >
-         <Users/>
-         {/* <Messages/> */}
-        </div>
+        </BrowserRouter>
+       
+        {/* <div className="ui container" style={{ alignItems: 'center' }} >
+          <Users />
+          <Messages/>
+        </div> */}
+
+
       </div>
-
-
-
-
     );
   }
 }

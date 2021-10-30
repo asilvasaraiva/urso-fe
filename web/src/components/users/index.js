@@ -1,5 +1,6 @@
-import React from 'react';
+import React,{Link} from 'react';
 import axios from 'axios';
+import {Route} from 'react-router-dom';
 
 import UserList from './userList';
 
@@ -10,7 +11,7 @@ class Users extends React.Component {
 
   async componentDidMount() {
 
-    const listUsers = await axios.get('http://localhost:8080/api/users/');
+    const listUsers = await axios.get('http://localhost:3001/users');
     console.log(listUsers.data);
     this.setState({list:listUsers.data});
 

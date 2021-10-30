@@ -8,12 +8,16 @@ const UserList = ({ listUsers }) => {
     useEffect(() => {
         setUserList(listUsers);
     }, [listUsers])
+    
+const editUser = (idUser)=>{
+    
+}
 
     const renderedList = listUsers.map(user => {
         return (
             <div className="item" key={user.idUser}>
                 <div className="right floated content">
-                    <button className="ui primary button" > Editar</button>
+                    <button className="ui primary button" onClick={()=>editUser(user.idUser)}> Editar</button>
                     <button className="ui negative button"> Excluir</button>
                 </div>
                 <div className="content">
