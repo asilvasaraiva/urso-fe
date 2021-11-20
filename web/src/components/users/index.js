@@ -1,19 +1,21 @@
-import React,{Link} from 'react';
-import axios from 'axios';
-import {Route} from 'react-router-dom';
+import React, { Link } from 'react';
+import AxiosRequest from '../AxiosRequest';
+import retrieveToken from '../useToken';
+
+import { Route } from 'react-router-dom';
 
 import UserList from './userList';
 
 
 class Users extends React.Component {
 
-  state={list:[]}
+  state = { list: [] };
 
   async componentDidMount() {
-
-    const listUsers = await axios.get('http://localhost:8080/api/users/');
+    let authorization = retrieveToken();
+    const listUsers = await AxiosRequest.get('/users/', { headers: { Authorization: authorization } });
     console.log(listUsers.data);
-    this.setState({list:listUsers.data});
+    this.setState({ list: listUsers.data });
 
   }
 
@@ -23,9 +25,9 @@ class Users extends React.Component {
       <div>
         <div className="ui header">
           <i className="users  icon"></i>
-          Gerenciar Usuários 
+          Gerenciar Usuários
         </div>
-        <UserList listUsers={this.state.list}  />
+        <UserList listUsers={this.state.list} />
       </div>
     );
   }

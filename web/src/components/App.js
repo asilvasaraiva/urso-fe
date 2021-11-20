@@ -1,16 +1,26 @@
-import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import React,{useState} from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import Users from './users';
 import Reports from './reports';
 import Profile from './profile';
 import Messages from './messages';
 import { Header, Footer, SidePanel } from './commons/';
-import MainContent from './commons/MainContent';
+import Login from './login/Login';
 
 
-class App extends React.Component {
-  render() {
+
+function App() {
+
+  const  [token, setToken] = useState();
+
+ 
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+ 
+
+  //Adicionar um arquivo para ser a API_ROUTE
     return (
       <div>
         <BrowserRouter>
@@ -24,9 +34,9 @@ class App extends React.Component {
                 <div className="twelve wide column" style={{paddingRight:'200px'}}>
                 <div className="ui raised segment">
                   <div>
-
                   <Route path="/users" exact component={Users} />
                   <Route path="/messages" exact component={Messages} />
+                  <Route path="/" exact component={Profile} />
                   <Route path="/profile" exact component={Profile} />
                   <Route path="/reports" exact component={Reports} />
                   </div>
@@ -46,7 +56,7 @@ class App extends React.Component {
 
       </div >
     );
-  }
+  
 }
 
 export default App;
