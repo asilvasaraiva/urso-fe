@@ -1,12 +1,11 @@
 import React, { useState, useEffect} from 'react';
-import axios from 'axios';
+import AxiosRequest from '../AxiosRequest';
+import retrieveToken from '../useToken';
 
 
 const MessagesLists = (props) => {
     const [activeIndex, setActiveIndex] = useState(null);
     const [readMessages, setReadMessages] = useState(props.newMessages);
-
-
 
     useEffect(()=>{
         setReadMessages(props.newMessages);
@@ -16,9 +15,10 @@ const MessagesLists = (props) => {
         setActiveIndex(index);
 
         if (!msg.read) {
+            let authorization = retrieveToken();
             msg.read = true;
             console.log(msg)
-            const listMessages = await axios.put('http://localhost:8080/api/admin/messages/' + msg.idMessage, msg);  
+            const listMessages = await AxiosRequest.put('/admin/messages/' + msg.idMessage, msg,{ headers: { Authorization: authorization }, });  
             if(readMessages>0)   
             var newNumber =  readMessages-1;      
                 setReadMessages(newNumber);
