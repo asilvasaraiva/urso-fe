@@ -1,8 +1,6 @@
 import React, { Link } from 'react';
 import AxiosRequest from '../AxiosRequest';
-import retrieveToken from '../useToken';
-
-import { Route } from 'react-router-dom';
+import {retrieveToken} from '../Utils';
 
 import UserList from './userList';
 

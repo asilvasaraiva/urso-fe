@@ -1,6 +1,6 @@
 import React from 'react';
 import AxiosRequest from '../AxiosRequest';
-import retrieveToken from '../useToken';
+import {retrieveToken} from '../Utils';
 import MessagesLists from './messageList';
 import Spinner from '../Spinner';
 

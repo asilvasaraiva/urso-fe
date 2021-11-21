@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import AxiosRequest from '../AxiosRequest';
-import retrieveToken from '../useToken';
+import { retrieveToken, calculaIdade } from '../Utils';
 import Spinner from '../Spinner';
 
 
-const UserList = ({ listUsers ,updateParentList}) => {
+const UserList = ({ listUsers, updateParentList }) => {
     const [userList, setUserList] = useState(listUsers);
     const [spinActive, setSpinActive] = useState(false)
 
@@ -22,6 +22,7 @@ const UserList = ({ listUsers ,updateParentList}) => {
     }
 
     const renderedList = userList.map(user => {
+        let age = calculaIdade(new Date(user.birth));
         return (
             <div className="item" key={user.idUser}>
                 <div className="right floated content">
@@ -30,14 +31,26 @@ const UserList = ({ listUsers ,updateParentList}) => {
                         onClick={() => changeAdmin(user.idUser)}>
                         {user.admin ? 'Revogar ADMIN' : 'Tornar Admin'}
                     </button>
+                    {/* <div class="ui buttons">
+                        <button class="ui button">Cancel</button>
+                        <div class="or" data-text="ou"></div>
+                        <button class="ui positive button">Save</button>
+                    </div> */}
                     <button
                         className="ui negative button">
                         Excluir usuário
                     </button>
                 </div>
                 <div className="content">
-                    {user.name} {user.surname} {user.admin ? <b>[Administrador]</b> : <i>(Usuário)</i>}
-                    <div className="description">{user.email}</div>
+                    <h4>
+                        {user.name} {user.surname} {user.admin ? <b>[Administrador]</b> : <i>(Usuário)</i>}
+                        <div className="description">
+                            {age} anos
+                        </div>
+                        <div className="description">
+                            {user.email}
+                        </div>
+                    </h4>
                 </div>
             </div>
         )

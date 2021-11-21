@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import AxiosRequest from '../AxiosRequest';
-import retrieveToken from '../useToken';
+import {retrieveToken} from '../Utils';
 
 
 const MessagesLists = (props) => {

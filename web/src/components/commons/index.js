@@ -5,7 +5,6 @@ import MainContent from './MainContent';
 export const Header = () => {
     return (
         <div className="ui secondary pointing menu">
-
             <Link to="/profile" className="item">
                 <h3><i className="address book outline icon"></i> Meu Perfil</h3>
             </Link>
@@ -16,23 +15,6 @@ export const Header = () => {
                 </div>
             </div>
 
-
-            {/* <div className="right menu">
-                <div className="item">
-                    <i className="home icon"></i>
-                    <Link to="/profile">
-                    Home
-                    </Link> 
-                    
-                
-                <a className="item">
-                    <i className="grid layout icon"></i> Browse
-                </a>
-                <a className="item">
-                   
-                </a>
-            </div>
-            </div> */}
         </div>
     );
 }
@@ -64,7 +46,7 @@ export const SidePanel = () => {
 export const Footer = () => {
 
     return (
-        <div className="ui center menu ">            
+        <div className="ui center aligned segment">            
             <div className="column position flex" >
                 <h3>Your Solution, 2021 -  Todos os Direitos Reservados</h3>
                 </div>

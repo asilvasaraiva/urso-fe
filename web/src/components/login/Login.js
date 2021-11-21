@@ -4,7 +4,7 @@ import Spinner from '../Spinner';
 
 import './Login.css';
 
-async function loginUser(credentials, setErroActive) {
+async function loginUser(credentials, setErroActive, setErroConexao) {
     return AxiosRequest.post('/auth/login/', JSON.stringify(credentials), {
         headers: {
             'Content-Type': 'application/json'
@@ -12,15 +12,17 @@ async function loginUser(credentials, setErroActive) {
     })
         .then(res => res.data)
         .catch(error => {
-            let status = error.status;
-            if (status === 401) {
-                console.log("usuário ou senha inválido");
-                setErroActive(true);
-
-            } else if (status === 500) {
+            if (error !== null) {
+                let status = error.status;
+                if (status === 401) {
+                    console.log("usuário ou senha inválido");
+                    setErroActive(true);
+                }
+            }else{
                 console.log("Falha de conexão com o servidor, tente novamente em instantes");
+                setErroConexao(true);
             }
-        })
+        });
 }
 
 
@@ -28,6 +30,7 @@ export default function Login({ setToken }) {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
     const [erroActive, setErroActive] = useState(false);
+    const [erroConexao, setErroConexao] = useState(false)
     const [spinActive, setSpinActive] = useState(false)
     const [isAdmin, setIsNotAdmin] = useState(false);
 
@@ -40,7 +43,7 @@ export default function Login({ setToken }) {
         const token = await loginUser({
             username,
             password
-        }, setErroActive);
+        }, setErroActive, setErroConexao);
         setSpinActive(false);
 
         if (token !== undefined) {
@@ -58,9 +61,10 @@ export default function Login({ setToken }) {
         return <Spinner />;
     }
 
-    function changePermission(){
+    function changePermission() {
         setIsNotAdmin(false);
         setErroActive(false);
+        setErroConexao(false);
     }
     return (
         <div className="ui one column stackable center aligned page grid">
@@ -75,7 +79,7 @@ export default function Login({ setToken }) {
                             <label>
                                 Endereço de email:
                             </label>
-                            <div className={`field ${erroActive? 'error':''}`}>
+                            <div className={`field ${erroActive ? 'error' : ''}`}>
                                 <input
                                     type="text"
                                     onChange={e => setUserName(e.target.value)}
@@ -84,12 +88,13 @@ export default function Login({ setToken }) {
                             </div>
                             <label>
                                 Password
-                                <div className={`field ${erroActive? 'error':''}`}>
+                                <div className={`field ${erroActive ? 'error' : ''}`}>
                                     <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Senha" />
                                 </div>
                             </label>
                             {erroActive && <div><p>Usuário ou senha inválidos</p></div>}
                             {isAdmin && <div><p>Conta informada não é um adminstrador</p></div>}
+                            {erroConexao && <div><p>Falha de conexão com o servidor, tente novamente em instantes</p></div>}
                         </div>
                         <button className="ui button primary" type="submit">Submit</button>
                     </form>
