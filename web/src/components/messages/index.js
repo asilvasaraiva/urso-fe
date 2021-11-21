@@ -14,9 +14,9 @@ class Messages extends React.Component {
     let authorization = retrieveToken();
 
     const listMessages = await AxiosRequest.get('/admin/messages/', {headers:{Authorization:authorization}});
-    console.log(listMessages);
+    // console.log(listMessages);
     let newMsg = listMessages.data.filter(m => m.read === false);
-    console.log(newMsg);
+    // console.log(newMsg);
     this.setState({ messages: listMessages.data, newMsg: newMsg.length });
   }
 

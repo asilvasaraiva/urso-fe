@@ -17,7 +17,7 @@ const MessagesLists = (props) => {
         if (!msg.read) {
             let authorization = retrieveToken();
             msg.read = true;
-            console.log(msg)
+            // console.log(msg)
             const listMessages = await AxiosRequest.put('/admin/messages/' + msg.idMessage, msg,{ headers: { Authorization: authorization }, });  
             if(readMessages>0)   
             var newNumber =  readMessages-1;      
