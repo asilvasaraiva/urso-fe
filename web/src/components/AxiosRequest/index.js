@@ -1,8 +1,15 @@
 import axios from 'axios';
-import retrieveToken from '../useToken';
 
 const URL = 'http://localhost:8080/api';
 
-export default axios.create({
+const AxiosRequest =  axios.create({
     baseURL:URL
 });
+
+AxiosRequest.interceptors.response.use(response => {
+    return response;
+}, error => {    
+    return Promise.reject(error.response);
+});
+
+export default AxiosRequest;
