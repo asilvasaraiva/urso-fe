@@ -1,8 +1,8 @@
 import React from 'react';
 import AxiosRequest from '../AxiosRequest';
 import retrieveToken from '../useToken';
-
 import MessagesLists from './messageList';
+import Spinner from '../Spinner';
 
 class Messages extends React.Component {
   state = { messages: [], newMsg: 0 };
@@ -22,7 +22,7 @@ class Messages extends React.Component {
 
   render() {
     if (this.state.messages === []) {
-      return <div>Loading...</div>
+      return <Spinner />
     }
 
     return (

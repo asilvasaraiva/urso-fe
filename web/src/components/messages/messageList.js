@@ -42,9 +42,14 @@ const MessagesLists = (props) => {
         );
     });
 
+
+        if(messages===null){
+            return 
+        }
+
     return (
         <div className="">
-            <div className="ui header">
+            <div className="ui  horizontal divider header">
                 <i className="envelope open icon"></i>
                 Todas as mensagens ({readMessages} mensagens não lidas)
             </div>

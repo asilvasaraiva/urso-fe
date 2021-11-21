@@ -7,7 +7,7 @@ export const Header = () => {
         <div className="ui secondary pointing menu">
 
             <Link to="/profile" className="item">
-                <h3><i className="user icon"></i> Meu Perfil</h3>
+                <h3><i className="address book outline icon"></i> Meu Perfil</h3>
             </Link>
 
             <div className="right menu">
@@ -47,7 +47,7 @@ export const SidePanel = () => {
             </div>
             <div className="column ten   wide">
                 <Link to="/users" className="ui primary button">
-                    <h3> <i className="user icon"></i>Usuários</h3>
+                    <h3> <i className="users icon"></i>Usuários</h3>
                 </Link>
             </div>
             <div className="column ten wide">

@@ -23,7 +23,7 @@ class Users extends React.Component {
   render() {
     return (
       <div>
-        <div className="ui header">
+        <div className="ui horizontal divider header">
           <i className="users  icon"></i>
           Gerenciar Usuários
         </div>

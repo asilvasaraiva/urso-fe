@@ -11,7 +11,14 @@ async function loginUser(credentials) {
         },
         body: JSON.stringify(credentials)
     })
-        .then(data => data.json())
+        .then(data => {
+            if(data.status==200){
+                return data.json();
+            }else 
+               return null;
+            }
+            
+        )
 }
 
 export default function Login({ setToken }) {
@@ -24,8 +31,13 @@ export default function Login({ setToken }) {
             username,
             password
         });
-        sessionStorage.setItem('token', JSON.stringify(token));
-        setToken(token);
+
+        if(token!== null && token.roles[0]==="ADMIN"){
+            sessionStorage.setItem('token', JSON.stringify(token));
+            setToken(token);
+        }else{
+            alert("Usuário não é admin")
+        }
     }
 
     return (
