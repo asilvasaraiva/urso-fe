@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import AxiosRequest from '../AxiosRequest';
 import {retrieveToken} from '../Utils';
+import Spinner from '../Spinner';
 
 
 const MessagesLists = (props) => {
@@ -44,7 +45,7 @@ const MessagesLists = (props) => {
 
 
         if(messages===null){
-            return 
+            return <Spinner/>
         }
 
     return (
