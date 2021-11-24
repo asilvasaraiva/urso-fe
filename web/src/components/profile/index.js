@@ -48,12 +48,14 @@ class Profile extends React.Component {
               </div>
             </h3>
           </div>
-          <div className="ui center aligned basic segment">
-            <div className="ui buttons ">
-              <button className="ui button primary">Trocar senha</button>
-              <div className="or" data-text="ou"></div>
-              <button className="ui negative button"> Desconectar</button>
-            </div>
+          <div className="ui center aligned segment">
+          <div className="one column" >
+            
+            {/* <div className="ui buttons "> */}
+              <button className="ui circular button primary">Trocar senha</button>
+              <button className="ui circular negative button"> Desconectar</button>
+            {/* </div> */}
+          </div>
           </div>
         </div>
       </React.Fragment>

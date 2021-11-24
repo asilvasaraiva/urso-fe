@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import MainContent from './MainContent';
+
 
 export const Header = () => {
     return (
@@ -25,7 +25,7 @@ export const SidePanel = () => {
             <div className="column ten  wide">
                 <Link to="/messages" className=" ui primary button ">
                     <h3> <i className="mail icon"></i>Mensagens</h3>
-                </Link>                
+                </Link>
             </div>
             <div className="column ten   wide">
                 <Link to="/users" className="ui primary button">
@@ -35,7 +35,7 @@ export const SidePanel = () => {
             <div className="column ten wide">
                 <Link to="/reports" className="ui primary button" >
 
-                <h3> <i className="chart line icon"></i>Relatórios</h3>
+                    <h3> <i className="chart line icon"></i>Relatórios</h3>
                 </Link>
             </div>
 
@@ -46,10 +46,12 @@ export const SidePanel = () => {
 export const Footer = () => {
 
     return (
-        <div className="ui center aligned segment">            
-            <div className="column position flex" >
-                <h3>Your Solution, 2021 -  Todos os Direitos Reservados</h3>
+        <div className="footer">
+            <div className="ui center aligned  segment">
+                <div className="column" >
+                    <h3>Your Solution, 2021 -  Todos os Direitos Reservados</h3>
                 </div>
+            </div>
         </div>
 
     );

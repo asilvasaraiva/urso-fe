@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AxiosRequest from '../AxiosRequest';
 import Spinner from '../Spinner';
 
-import './Login.css';
+import './Login.scss';
 
 async function loginUser(credentials, setErroActive, setErroConexao) {
     return AxiosRequest.post('/auth/login/', JSON.stringify(credentials), {
@@ -66,57 +66,108 @@ export default function Login({ setToken }) {
         setErroActive(false);
         setErroConexao(false);
     }
-    return (
-        <div className="ui one column stackable centered page grid">
-            <div className="column five wide">
-                <div className="ui form">
-                    <h1>Bem Vindo!!</h1>
-                    <p>Por favor informe seus dados</p>
-                    <form onSubmit={handleSubmit}>
-                        <div >
-                            <label>
-                                Endereço de email:
-                            </label>
-                            <div className={`field ${erroActive ? 'error' : ''}`}>
-                                <input
-                                    type="text"
-                                    onChange={e => setUserName(e.target.value)}
-                                    placeholder="examplo@exemplo"
-                                    onFocus={() => changePermission()} />
-                            </div>
-                            <label>
-                                Senha
-                                <div className={`field ${erroActive ? 'error' : ''}`}>
-                                    <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Senha" />
-                                </div>
-                            </label>
-                            {erroActive && <div><p>Usuário ou senha inválidos</p></div>}
-                            {isAdmin && <div><p>Conta informada não é um adminstrador</p></div>}
-                            {erroConexao && <div><p>Falha de conexão com o servidor, tente novamente em instantes</p></div>}
-                        </div>
-                        <div className="ui center aligned basic segment">
-                            <button className="ui button primary" type="submit">Login</button>
-                        </div>
-                    </form>
 
-                    <div class="ui horizontal divider">
-                        Ou
-                    </div>
-                    <div className="ui center aligned basic segment">
-                        <button class="ui circular facebook button">
-                            <i class="facebook icon"></i>
-                            Facebook
-                        </button>
-                        <button class="ui circular google negative button">
-                            <i class="google  icon"></i>
-                            Google
-                        </button>
-                    </div>
-
+    return ( //FORM NOVO
+        <div id="loginform">
+            <h3 id="headerTitle">   Bem Vindo!!     
+            </h3>
+            <form onSubmit={handleSubmit}>
+                <div class="row">
+                    <label>
+                        E-mail:
+                    </label>
+                    {/* <div className={`validation ${erroActive ? 'error' : ''}`}> */}
+                        <input
+                            type="text"
+                            onChange={e => setUserName(e.target.value)}
+                            placeholder="digite o email"
+                            onFocus={() => changePermission()} />
+                    {/* </div> */}
                 </div>
+                <div class="row label-login inline">
+                    <label className="senha">
+                        Senha:
+                    </label>
+                    {/* <div className={`validation ${erroActive ? 'error' : ''}`}> */}
+                        <input type="password" onChange={e => setPassword(e.target.value)} placeholder="digite a senha" />
+                    {/* </div> */}
+                    <label className="esqueceu-senha " style={{  textAlign:'right' }}>Esqueceu a senha?</label>
+                </div>
+                <div id="button" class="row" >
+                    <button type="submit">Login</button>
+                    {erroActive && <div className="validation"><p>Credenciais inválidas</p></div>}
+                    {isAdmin && <div  className="validation"><p>Conta informada não é um adminstrador</p></div>}
+                    {erroConexao && <div  className="validation"><p>Falha de conexão com o servidor, tente novamente em instantes</p></div>}
+                </div>
+            </form>
+
+            <div class="ui horizontal divider">
+                Ou
+            </div>
+            <div className="ui center aligned basic segment">
+                <button class="ui circular facebook button">
+                    <i class="facebook icon"></i>
+                    Facebook
+                </button>
+                <button class="ui circular google negative button">
+                    <i class="google  icon"></i>
+                    Google
+                </button>
             </div>
         </div>
     )
+
+    // return ( FORM QUE FUNCIONA
+    //     <div className="ui one column stackable centered page grid">
+    //         <div className="column five wide">
+    //             <div className="ui form">
+    //                 <h1>Bem Vindo!!</h1>
+    //                 <p>Por favor informe seus dados</p>
+    //                 <form onSubmit={handleSubmit}>
+    //                     <div >
+    //                         <label>
+    //                             Endereço de email:
+    //                         </label>
+    //                         <div className={`field ${erroActive ? 'error' : ''}`}>
+    //                             <input
+    //                                 type="text"
+    //                                 onChange={e => setUserName(e.target.value)}
+    //                                 placeholder="examplo@exemplo"
+    //                                 onFocus={() => changePermission()} />
+    //                         </div>
+    //                         <label>
+    //                             Senha
+    //                             <div className={`field ${erroActive ? 'error' : ''}`}>
+    //                                 <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Senha" />
+    //                             </div>
+    //                         </label>
+    //                         {erroActive && <div><p>Usuário ou senha inválidos</p></div>}
+    //                         {isAdmin && <div><p>Conta informada não é um adminstrador</p></div>}
+    //                         {erroConexao && <div><p>Falha de conexão com o servidor, tente novamente em instantes</p></div>}
+    //                     </div>
+    //                     <div className="ui center aligned basic segment">
+    //                         <button className="ui button primary" type="submit">Login</button>
+    //                     </div>
+    //                 </form>
+
+    //                 <div class="ui horizontal divider">
+    //                     Ou
+    //                 </div>
+    //                 <div className="ui center aligned basic segment">
+    //                     <button class="ui circular facebook button">
+    //                         <i class="facebook icon"></i>
+    //                         Facebook
+    //                     </button>
+    //                     <button class="ui circular google negative button">
+    //                         <i class="google  icon"></i>
+    //                         Google
+    //                     </button>
+    //                 </div>
+
+    //             </div>
+    //         </div>
+    //     </div>
+    // )
 
 
 }

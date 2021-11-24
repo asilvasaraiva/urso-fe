@@ -27,7 +27,7 @@ const UserList = ({ listUsers, updateParentList }) => {
             <div className="item" key={user.idUser}>
                 <div className="right floated content">
                     <button
-                        className={`ui ${user.admin ? 'primary' : 'green'} button`}
+                        className={`ui ${user.admin ? 'primary' : 'green'} circular button`}
                         onClick={() => changeAdmin(user.idUser)}>
                         {user.admin ? 'Revogar ADMIN' : 'Tornar Admin'}
                     </button>
@@ -36,8 +36,8 @@ const UserList = ({ listUsers, updateParentList }) => {
                         <div class="or" data-text="ou"></div>
                         <button class="ui positive button">Save</button>
                     </div> */}
-                    <button
-                        className="ui negative button">
+                    <button 
+                        className="ui circular negative button">
                         Excluir usuário
                     </button>
                 </div>
