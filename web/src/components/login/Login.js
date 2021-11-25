@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import AxiosRequest from '../AxiosRequest';
 import Spinner from '../Spinner';
+
 
 import './Login.scss';
 
@@ -27,12 +29,13 @@ async function loginUser(credentials, setErroActive, setErroConexao) {
 
 
 export default function Login({ setToken }) {
+     let history = useHistory(); 
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
     const [erroActive, setErroActive] = useState(false);
     const [erroConexao, setErroConexao] = useState(false)
     const [spinActive, setSpinActive] = useState(false)
-    const [isAdmin, setIsNotAdmin] = useState(false);
+    const [isNotAdmin, setIsNotAdmin] = useState(false);
 
 
 
@@ -49,7 +52,8 @@ export default function Login({ setToken }) {
         if (token !== undefined) {
             if (token.roles[0] === "ADMIN") {
                 sessionStorage.setItem('token', JSON.stringify(token));
-                setToken(token);
+                 setToken(token);
+                history.push("/");
             } else {
                 console.log("Usuário não é admin")
                 setIsNotAdmin(true);
@@ -67,12 +71,14 @@ export default function Login({ setToken }) {
         setErroConexao(false);
     }
 
+   
+
     return ( //FORM NOVO
         <div id="loginform">
             <h3 id="headerTitle">   Bem Vindo!!     
             </h3>
             <form onSubmit={handleSubmit}>
-                <div class="row">
+                <div className="row">
                     <label>
                         E-mail:
                     </label>
@@ -84,7 +90,7 @@ export default function Login({ setToken }) {
                             onFocus={() => changePermission()} />
                     {/* </div> */}
                 </div>
-                <div class="row label-login inline">
+                <div className="row label-login inline">
                     <label className="senha">
                         Senha:
                     </label>
@@ -93,24 +99,24 @@ export default function Login({ setToken }) {
                     {/* </div> */}
                     <label className="esqueceu-senha " style={{  textAlign:'right' }}>Esqueceu a senha?</label>
                 </div>
-                <div id="button" class="row" >
-                    <button type="submit">Login</button>
+                <div id="button" className="row" >
+                    <button type="submit" >Login</button>
                     {erroActive && <div className="validation"><p>Credenciais inválidas</p></div>}
-                    {isAdmin && <div  className="validation"><p>Conta informada não é um adminstrador</p></div>}
+                    {isNotAdmin && <div  className="validation"><p>Conta informada não é um adminstrador</p></div>}
                     {erroConexao && <div  className="validation"><p>Falha de conexão com o servidor, tente novamente em instantes</p></div>}
                 </div>
             </form>
 
-            <div class="ui horizontal divider">
+            <div className="ui horizontal divider">
                 Ou
             </div>
             <div className="ui center aligned basic segment">
-                <button class="ui circular facebook button">
-                    <i class="facebook icon"></i>
+                <button className="ui circular facebook button">
+                    <i className="facebook icon"></i>
                     Facebook
                 </button>
-                <button class="ui circular google negative button">
-                    <i class="google  icon"></i>
+                <button className="ui circular google negative button">
+                    <i className="google  icon"></i>
                     Google
                 </button>
             </div>

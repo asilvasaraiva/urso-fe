@@ -1,20 +1,30 @@
 import React from 'react';
+import { Redirect,withRouter  } from 'react-router-dom';
+
 import AxiosRequest from '../AxiosRequest';
 import {retrieveToken, calculaIdade} from '../Utils';
 import Spinner from '../Spinner';
 
 
-class Profile extends React.Component {
+class Profile extends React.Component{
+ 
 
   state = { profile: null }
-
-  async componentDidMount() {
+  
+  
+  async componentDidMount() {   
+    
     let authorization = retrieveToken();
-    const tokenString = JSON.parse(sessionStorage.getItem('token'));
-    let userID = tokenString.id;
-    const profile = await AxiosRequest.get('/users/' + userID, { headers: { Authorization: authorization } });
-    console.log(profile.data)
-    this.setState({ profile: profile.data });
+    console.log(authorization);
+    if(!authorization){
+      return <Redirect to="/login"/>;
+    }else{
+      const tokenString = JSON.parse(sessionStorage.getItem('token'));
+      let userID = tokenString.id;
+      const profile = await AxiosRequest.get('/users/' + userID, { headers: { Authorization: authorization } });
+      console.log(profile.data)
+      this.setState({ profile: profile.data });
+    }
   }
 
   renderedProfile = (myProfile) => {
@@ -23,8 +33,8 @@ class Profile extends React.Component {
     var joinDate = new Date(myProfile.joinDate);
     return (
       <React.Fragment>
-        <div class="ui form">
-          <div class="ui segment">
+        <div className="ui form">
+          <div className="ui segment">
             <h3>
               <div className="inline fields">
                 <div className="nine wide field">
@@ -66,10 +76,14 @@ class Profile extends React.Component {
 
   render() {
 
+    if(!this.props.isLogged){    
+      return <Redirect to="/login"/>
+    }
+
     if (this.state.profile === null) {
       return <Spinner />
     }
-
+    
     return (
       <div>
         <div className="ui horizontal divider header">
@@ -85,4 +99,4 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+export default withRouter(Profile);

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+
 import AxiosRequest from '../AxiosRequest';
 import {retrieveToken} from '../Utils';
 import MessagesLists from './messageList';
@@ -11,8 +13,10 @@ class Messages extends React.Component {
    fechLista
 
   async componentDidMount() {
-    let authorization = retrieveToken();
-
+    let authorization = retrieveToken(this.props.myToken);
+    if(authorization===null){
+      return <Redirect to="/login"/>
+    }
     const listMessages = await AxiosRequest.get('/admin/messages/', {headers:{Authorization:authorization}});
     // console.log(listMessages);
     let newMsg = listMessages.data.filter(m => m.read === false);
@@ -21,6 +25,11 @@ class Messages extends React.Component {
   }
 
   render() {
+
+    if(!this.props.isLogged){    
+      return <Redirect to="/login"/>
+    }
+
     if (this.state.messages === []) {
       return <Spinner />
     }

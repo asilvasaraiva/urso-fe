@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Users from './users';
 import Reports from './reports';
 import Profile from './profile';
 import Messages from './messages';
-import { Header, Footer, SidePanel } from './commons/';
+import Home from './Home';
 import Login from './login/Login';
+import {getRawToken} from './Utils';
+
 
 
 
@@ -14,49 +16,37 @@ function App() {
 
   const [token, setToken] = useState();
 
+console.log("func Raw Token")
+ console.log(getRawToken());
 
-  if (!token) {
-    return <Login setToken={setToken} />
+  let authorized;
+
+
+  if (!getRawToken()) {
+    authorized = false;
+    // alert("Não logado")
+    // console.log(token)
+  } else {
+    // alert('Logado')
+    // console.log(token);
+    authorized = true;
   }
 
-
-  //Adicionar um arquivo para ser a API_ROUTE
   return (
     <div>
-      <BrowserRouter>
-        <div>
-          <Header />
-          <div className="ui two column centered grid" style={{ marginTop: '100px' }}>
-            <div className="ui row">
-              <div className="four wide column">
-                <SidePanel />
-              </div>
-              <div className="twelve wide column" style={{ paddingRight: '200px' }}>
-                <div className="ui raised segment">
-                  <div>
-                    <Route path="/users" exact component={Users} />
-                    <Route path="/messages" exact component={Messages} />
-                    <Route path="/" exact component={Profile} />
-                    <Route path="/profile" exact component={Profile} />
-                    <Route path="/reports" exact component={Reports} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        <Footer />
-        </div>
-      </BrowserRouter>
-      {/* <div className="ui container" style={{ alignItems: 'center' }} >
-          <Users />
-          <Messages/>
-        </div> */}
-
-
-    </div >
+      {authorized && <Home />}
+      <Switch>
+        <Route path="/users" exact component={() => < Users isLogged={authorized} />} />
+        <Route path="/messages" exact component={() => <Messages isLogged={authorized} />} />
+        <Route path="/" exact component={() => <Profile isLogged={authorized} />} />
+        {/* <Route path="/profile" exact component={() => <Profile isLogged={authorized}/>} /> */}
+        <Route path="/reports" exact component={() => <Reports isLogged={authorized} />} />
+        <Route path="/login" exact component={() => <Login setToken={setToken} />} />
+        <Redirect to="/login"/>   
+      </Switch>
+    </div>
   );
-
+//TODO - SE A PESSOA DIGITAR UMA ROTA ALEATORIA AUTENTICADO ELE EXIBE UM LOGIN DENTRO DO MENU
 }
 
 export default App;

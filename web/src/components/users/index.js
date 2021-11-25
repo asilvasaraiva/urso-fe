@@ -1,4 +1,6 @@
 import React, { Link } from 'react';
+import { Redirect,withRouter  } from 'react-router-dom';
+
 import AxiosRequest from '../AxiosRequest';
 import {retrieveToken} from '../Utils';
 
@@ -13,10 +15,13 @@ class Users extends React.Component {
   
   async componentDidMount() {
     let authorization = retrieveToken();
-    const listUsers = await AxiosRequest.get('/users/', { headers: { Authorization: authorization } });
-    console.log(listUsers.data);
-    this.setState({ list: listUsers.data });
-
+    if(!authorization){
+      return <Redirect to="/login"/>;
+    }else{
+      const listUsers = await AxiosRequest.get('/users/', { headers: { Authorization: authorization } });
+      console.log(listUsers.data);
+      this.setState({ list: listUsers.data });
+    }
   }
   
   updateList = (newList)=> {
@@ -24,13 +29,21 @@ class Users extends React.Component {
  }
 
   render() {
+    
+    if(!this.props.isLogged){    
+      return <Redirect to="/login"/>
+    }
     return (
       <div>
         <div className="ui horizontal divider header">
           <i className="users  icon"></i>
           Gerenciar Usuários
         </div>
-        <UserList listUsers={this.state.list} updateParentList={this.updateList}/>
+        <UserList 
+        listUsers={this.state.list} 
+        updateParentList={this.updateList}
+        isLogged={this.props.isLogged}
+         myToken={this.props.myToken} />
       </div>
     );
   }

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export const Header = () => {
     return (
         <div className="ui secondary pointing menu">
-            <Link to="/profile" className="item">
+            <Link to="/" className="item">
                 <h3><i className="address book outline icon"></i> Meu Perfil</h3>
             </Link>
 
