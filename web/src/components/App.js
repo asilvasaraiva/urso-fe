@@ -54,7 +54,7 @@ function App() {
                   {/* <Route path="/profile" exact component={() => <Profile isLogged={authorized}/>} /> */}
                   <Route path="/reports" exact component={() => <Reports isLogged={authorized} />} />
                   {/* <Route path="/login" exact component={() => <Login setToken={setToken} />} /> */}
-                  <Redirect to="/login" />
+                  <Redirect to="/" />
                 </Switch>
               </div>
             </div>
@@ -66,7 +66,7 @@ function App() {
       {/* </Home> */}
     </div>
   );
-  //TODO - SE A PESSOA DIGITAR UMA ROTA ALEATORIA AUTENTICADO ELE EXIBE UM LOGIN DENTRO DO MENU e tratar erro de conexão no server
+  //TODO - tratar erro de conexão no server
 
 }
 
