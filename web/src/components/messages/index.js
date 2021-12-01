@@ -15,7 +15,7 @@ class Messages extends React.Component {
   async componentDidMount() {
     let authorization = retrieveToken(this.props.myToken);
     if(authorization===null){
-      return <Redirect to="/login"/>
+      window.location.reload();
     }
     const listMessages = await AxiosRequest.get('/admin/messages/', {headers:{Authorization:authorization}});
     // console.log(listMessages);

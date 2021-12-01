@@ -16,7 +16,7 @@ class Users extends React.Component {
   async componentDidMount() {
     let authorization = retrieveToken();
     if(!authorization){
-      return <Redirect to="/login"/>;
+      window.location.reload();
     }else{
       const listUsers = await AxiosRequest.get('/users/', { headers: { Authorization: authorization } });
       console.log(listUsers.data);

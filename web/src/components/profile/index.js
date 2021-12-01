@@ -1,30 +1,39 @@
 import React from 'react';
-import { Redirect,withRouter  } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import AxiosRequest from '../AxiosRequest';
-import {retrieveToken, calculaIdade} from '../Utils';
+import { retrieveToken, calculaIdade } from '../Utils';
 import Spinner from '../Spinner';
 
 
-class Profile extends React.Component{
- 
+class Profile extends React.Component {
+
 
   state = { profile: null }
-  
-  
-  async componentDidMount() {   
-    
-    let authorization = retrieveToken();
+
+  LOG_OUT = false;
+
+
+  async componentDidMount() {
+
+    var authorization = retrieveToken();
+
     console.log(authorization);
-    if(!authorization){
-      return <Redirect to="/login"/>;
-    }else{
+    if (!authorization) {
+      window.location.reload();
+    } else {
       const tokenString = JSON.parse(sessionStorage.getItem('token'));
       let userID = tokenString.id;
       const profile = await AxiosRequest.get('/users/' + userID, { headers: { Authorization: authorization } });
       console.log(profile.data)
       this.setState({ profile: profile.data });
     }
+  }
+
+  logOut = () => {
+    alert("Desconectado com sucesso");
+    sessionStorage.removeItem('token');
+    window.location.reload();
   }
 
   renderedProfile = (myProfile) => {
@@ -59,13 +68,13 @@ class Profile extends React.Component{
             </h3>
           </div>
           <div className="ui center aligned segment">
-          <div className="one column" >
-            
-            {/* <div className="ui buttons "> */}
+            <div className="one column" >
+
+              {/* <div className="ui buttons "> */}
               <button className="ui circular button primary">Trocar senha</button>
-              <button className="ui circular negative button"> Desconectar</button>
-            {/* </div> */}
-          </div>
+              <button className="ui circular negative button" onClick={() => this.logOut()}> Desconectar</button>
+              {/* </div> */}
+            </div>
           </div>
         </div>
       </React.Fragment>
@@ -76,14 +85,15 @@ class Profile extends React.Component{
 
   render() {
 
-    if(!this.props.isLogged){    
-      return <Redirect to="/login"/>
+
+    if (!this.props.isLogged) {
+      return <Redirect to="/login" />
     }
 
     if (this.state.profile === null) {
       return <Spinner />
     }
-    
+
     return (
       <div>
         <div className="ui horizontal divider header">

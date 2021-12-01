@@ -4,12 +4,11 @@ import { Header, Footer, SidePanel } from '../commons';
 
 
 
-const Home = () => {
+const Home = (props) => {
     return (
         <div>
             <Header />
             <div className="ui two column centered grid" style={{ marginTop: '100px' }}>
-
                 <div className="ui row">
                     <div className="four wide column">
                          <SidePanel />

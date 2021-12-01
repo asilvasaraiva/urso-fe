@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 const Reports = ({isLogged,myToken})=>{
 
   if(!isLogged){    
-    return <Redirect to="/login"/>
+    window.location.reload();
   }
 
   // if(authorization===null){
