@@ -9,32 +9,91 @@ import Spinner from '../Spinner';
 class Profile extends React.Component {
 
 
-  state = { profile: null }
+  state = { profile: null, Authorization:null}
 
   LOG_OUT = false;
+  
+  
 
 
-  async componentDidMount() {
+  componentDidMount() {
 
     var authorization = retrieveToken();
 
     console.log(authorization);
     if (!authorization) {
+      this.setState({Authorization:null})
       window.location.reload();
     } else {
-      const tokenString = JSON.parse(sessionStorage.getItem('token'));
-      let userID = tokenString.id;
-      const profile = await AxiosRequest.get('/users/' + userID, { headers: { Authorization: authorization } });
-      console.log(profile.data)
-      this.setState({ profile: profile.data });
+      this.setState({Authorization:authorization})
+      this.getProfile(authorization);
     }
   }
 
+
+
+  getProfile = async (authorization) => {
+    const tokenString = JSON.parse(sessionStorage.getItem('token'));
+    let userID = tokenString.id;
+    const profile = await AxiosRequest.get('/users/' + userID, { headers: { Authorization: authorization } });
+    console.log(profile.data)
+    this.setState({ profile: profile.data });
+
+  }
+
   logOut = () => {
-    alert("Desconectado com sucesso");
     sessionStorage.removeItem('token');
+    alert("Desconectado com sucesso");
     window.location.reload();
   }
+
+
+  changePasswd = () => {
+    var passwrd='', pswd = '';
+
+    return (
+      <div className="sidebar">
+        <div className="pusher">
+          <div className="ui small form "   >
+            <div className="two fields">
+              <div className="field">
+                <label>Nova senha</label>
+                <input placeholder="digite a senha" 
+                type="text" 
+                onChange={e => this.passwrd = e.target.value}
+                />
+              </div>
+              <div className="field">
+                <label>Confirme a senha</label>
+                <input placeholder="confirme a senha"  
+                type="text" 
+                onChange={e => this.pswd = e.target.value}
+                />
+              </div>
+            </div>
+            <div className="ui submit button right " onClick={(e) => this.submitPassrd(e,this.passwrd,this.pswd)}>Enviar</div>
+          </div>
+        </div>
+      </div>
+    )
+
+  }
+
+  submitPassrd = async (e, password,pswd) => {
+    e.preventDefault();
+
+    if(password === pswd){
+      const tokenString = JSON.parse(sessionStorage.getItem('token'));
+    let userID = tokenString.id;
+    alert(userID);
+    const profile = await AxiosRequest.put(`/users/${userID}/newpassword`,{password:pswd}, { headers: { Authorization: this.state.Authorization } });  
+    console.log(profile);  
+    }else{
+      alert("passwrd diferentes");      
+    }
+   
+  }
+
 
   renderedProfile = (myProfile) => {
 
@@ -67,15 +126,18 @@ class Profile extends React.Component {
               </div>
             </h3>
           </div>
-          <div className="ui center aligned segment">
-            <div className="one column" >
+          <div className="ui  segment">
+            <div className="two column" >
+              <div className="column">
 
-              {/* <div className="ui buttons "> */}
-              <button className="ui circular button primary">Trocar senha</button>
-              <button className="ui circular negative button" onClick={() => this.logOut()}> Desconectar</button>
-              {/* </div> */}
+              <label className="ui header " >Trocar senha
+
+              </label>
+              </div>
+              {this.changePasswd()}
             </div>
           </div>
+              <button className="fluid ui circular negative button" onClick={() => this.logOut()}> Desconectar</button>
         </div>
       </React.Fragment>
     );
@@ -94,6 +156,7 @@ class Profile extends React.Component {
       return <Spinner />
     }
 
+
     return (
       <div>
         <div className="ui horizontal divider header">
@@ -103,6 +166,7 @@ class Profile extends React.Component {
         <div>
           {this.renderedProfile(this.state.profile)}
         </div>
+
       </div>
 
     )
