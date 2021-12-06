@@ -9,9 +9,11 @@ import Spinner from '../Spinner';
 class Profile extends React.Component {
 
 
-  state = { profile: null, Authorization:null}
+  state = { profile: null
+     ,Authorization:null
+     ,erroActive:false}
 
-  LOG_OUT = false;
+  LOG_OUT = false;  
   
   
 
@@ -48,11 +50,11 @@ class Profile extends React.Component {
   }
 
 
-  changePasswd = () => {
-    var passwrd='', pswd = '';
 
+
+  changePasswd = () => {  
     return (
-      <div className="sidebar">
+      <form id="passrwd-form">
         <div className="pusher">
           <div className="ui small form "   >
             <div className="two fields">
@@ -61,6 +63,7 @@ class Profile extends React.Component {
                 <input placeholder="digite a senha" 
                 type="text" 
                 onChange={e => this.passwrd = e.target.value}
+                onFocus={() => this.erroActive=false}
                 />
               </div>
               <div className="field">
@@ -74,29 +77,26 @@ class Profile extends React.Component {
             <div className="ui submit button right " onClick={(e) => this.submitPassrd(e,this.passwrd,this.pswd)}>Enviar</div>
           </div>
         </div>
-      </div>
+      </form>
     )
-
   }
 
   submitPassrd = async (e, password,pswd) => {
     e.preventDefault();
-
     if(password === pswd){
       const tokenString = JSON.parse(sessionStorage.getItem('token'));
     let userID = tokenString.id;
-    alert(userID);
-    const profile = await AxiosRequest.put(`/users/${userID}/newpassword`,{password:pswd}, { headers: { Authorization: this.state.Authorization } });  
-    console.log(profile);  
+    const profile = await AxiosRequest.put(`/users/${userID}/newpassword`,{password:pswd}, { headers: { Authorization: this.state.Authorization } }); 
+    document.getElementById("passrwd-form").reset();
+    this.setState({ erroActive:true });
     }else{
-      alert("passwrd diferentes");      
+      this.setState({ erroActive:false });
     }
    
   }
 
 
   renderedProfile = (myProfile) => {
-
     var birth = calculaIdade(new Date(myProfile.birth));
     var joinDate = new Date(myProfile.joinDate);
     return (
@@ -135,6 +135,7 @@ class Profile extends React.Component {
               </label>
               </div>
               {this.changePasswd()}
+              {this.erroActive && <div className="validation"><p>Credenciais inválidas</p></div>}
             </div>
           </div>
               <button className="fluid ui circular negative button" onClick={() => this.logOut()}> Desconectar</button>

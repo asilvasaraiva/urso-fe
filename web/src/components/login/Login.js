@@ -123,58 +123,5 @@ export default function Login({ setToken }) {
         </div>
     )
 
-    // return ( FORM QUE FUNCIONA
-    //     <div className="ui one column stackable centered page grid">
-    //         <div className="column five wide">
-    //             <div className="ui form">
-    //                 <h1>Bem Vindo!!</h1>
-    //                 <p>Por favor informe seus dados</p>
-    //                 <form onSubmit={handleSubmit}>
-    //                     <div >
-    //                         <label>
-    //                             Endereço de email:
-    //                         </label>
-    //                         <div className={`field ${erroActive ? 'error' : ''}`}>
-    //                             <input
-    //                                 type="text"
-    //                                 onChange={e => setUserName(e.target.value)}
-    //                                 placeholder="examplo@exemplo"
-    //                                 onFocus={() => changePermission()} />
-    //                         </div>
-    //                         <label>
-    //                             Senha
-    //                             <div className={`field ${erroActive ? 'error' : ''}`}>
-    //                                 <input type="password" onChange={e => setPassword(e.target.value)} placeholder="Senha" />
-    //                             </div>
-    //                         </label>
-    //                         {erroActive && <div><p>Usuário ou senha inválidos</p></div>}
-    //                         {isAdmin && <div><p>Conta informada não é um adminstrador</p></div>}
-    //                         {erroConexao && <div><p>Falha de conexão com o servidor, tente novamente em instantes</p></div>}
-    //                     </div>
-    //                     <div className="ui center aligned basic segment">
-    //                         <button className="ui button primary" type="submit">Login</button>
-    //                     </div>
-    //                 </form>
-
-    //                 <div class="ui horizontal divider">
-    //                     Ou
-    //                 </div>
-    //                 <div className="ui center aligned basic segment">
-    //                     <button class="ui circular facebook button">
-    //                         <i class="facebook icon"></i>
-    //                         Facebook
-    //                     </button>
-    //                     <button class="ui circular google negative button">
-    //                         <i class="google  icon"></i>
-    //                         Google
-    //                     </button>
-    //                 </div>
-
-    //             </div>
-    //         </div>
-    //     </div>
-    // )
-
-
 }
 
