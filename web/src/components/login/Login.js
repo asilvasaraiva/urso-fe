@@ -80,24 +80,24 @@ export default function Login({ setToken }) {
             <form onSubmit={handleSubmit}>
                 <div className="row">
                     <label>
-                        E-mail:
+                        Meu email:
                     </label>
                     {/* <div className={`validation ${erroActive ? 'error' : ''}`}> */}
                         <input
                             type="text"
                             onChange={e => setUserName(e.target.value)}
-                            placeholder="digite o email"
+                            placeholder="email@email.com"
                             onFocus={() => changePermission()} />
                     {/* </div> */}
                 </div>
                 <div className="row label-login inline">
                     <label className="senha">
-                        Senha:
+                    Minha senha:
                     </label>
                     {/* <div className={`validation ${erroActive ? 'error' : ''}`}> */}
-                        <input type="password" onChange={e => setPassword(e.target.value)} placeholder="digite a senha" />
+                        <input type="password" onChange={e => setPassword(e.target.value)} placeholder="****" />
                     {/* </div> */}
-                    <label className="esqueceu-senha " style={{  textAlign:'right' }}>Esqueceu a senha?</label>
+                    <label className="esqueceu-senha" >Esqueceu a senha?</label>
                 </div>
                 <div id="button" className="row" >
                     <button type="submit" >Login</button>
