@@ -39,14 +39,14 @@ function App() {
       {/* <Home> */}
       <div>
         <Header />
-        <div className="ui two column centered grid" style={{ marginTop: '100px' }}>
+        <div className="ui two column centered grid" style={{ marginTop: '20px' }}>
 
           <div className="ui row">
             <div className="four wide column">
               <SidePanel />
             </div>
-            <div className="twelve wide column" style={{ paddingRight: '200px' }}>
-              <div className="ui raised segment">
+            <div className="twelve wide column" style={{ paddingRight: '100px' }}>
+              <div className="ui raised segment general-background">
                 <Switch>
                   <Route path="/users" exact component={() => < Users isLogged={authorized} />} />
                   <Route path="/messages" exact component={() => <Messages isLogged={authorized} />} />

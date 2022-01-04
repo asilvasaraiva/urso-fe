@@ -102,7 +102,7 @@ class Profile extends React.Component {
     return (
       <React.Fragment>
         <div className="ui form">
-          <div className="ui segment">
+          <div className="ui segment general-background">
             <h3>
               <div className="inline fields">
                 <div className="nine wide field">
@@ -126,7 +126,7 @@ class Profile extends React.Component {
               </div>
             </h3>
           </div>
-          <div className="ui  segment">
+          <div className="ui  segment general-background">
             <div className="two column" >
               <div className="column">
 
@@ -160,7 +160,7 @@ class Profile extends React.Component {
 
     return (
       <div>
-        <div className="ui horizontal divider header">
+        <div className="ui horizontal divider header ">
           <i className="address book outline icon"></i>
           Meu Perfil
         </div>

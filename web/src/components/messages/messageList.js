@@ -50,11 +50,11 @@ const MessagesLists = (props) => {
 
     return (
         <div className="">
-            <div className="ui  horizontal divider header">
+            <div className="ui  horizontal divider header ">
                 <i className="envelope open icon"></i>
                 Todas as mensagens ({readMessages} mensagens não lidas)
             </div>
-            <div className="ui ten wide styled fluid accordion " >{messages}</div>
+            <div className="ui ten wide styled fluid accordion general-background" >{messages}</div>
         </div>
     );
 }
