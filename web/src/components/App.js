@@ -5,11 +5,11 @@ import Users from './users';
 import Reports from './reports';
 import Profile from './profile';
 import Messages from './messages';
-import Home from './Home';
 import Login from './login/Login';
 import { getRawToken } from './Utils';
 
 import { Header, Footer, SidePanel } from './commons';
+import ForgotPassword from './ForgotPassword/ForgotPassword';
 
 
 
@@ -17,6 +17,7 @@ import { Header, Footer, SidePanel } from './commons';
 function App() {
 
   const [token, setToken] = useState();
+  const [ forgot,setForgot] =useState()
 
   console.log("func Raw Token")
   console.log(getRawToken());
@@ -30,13 +31,16 @@ function App() {
     authorized = true;
   }
 
-  if(!authorized){
-    return <Login setToken={setToken} />;
+  if(!authorized && !forgot){
+    return <Login setToken={setToken} setForgot={setForgot} />;
+  }
+
+  if(!authorized && forgot){
+    return <ForgotPassword setForgot={setForgot}/>
   }
 
   return (
-    <div>
-      {/* <Home> */}
+    <div>      
       <div>
         <Header />
         <div className="ui two column centered grid" style={{ marginTop: '20px' }}>
@@ -52,8 +56,7 @@ function App() {
                   <Route path="/messages" exact component={() => <Messages isLogged={authorized} />} />
                   <Route path="/" exact component={() => <Profile isLogged={authorized} />} />
                   {/* <Route path="/profile" exact component={() => <Profile isLogged={authorized}/>} /> */}
-                  <Route path="/reports" exact component={() => <Reports isLogged={authorized} />} />
-                  {/* <Route path="/login" exact component={() => <Login setToken={setToken} />} /> */}
+                  <Route path="/reports" exact component={() => <Reports isLogged={authorized} />} />               
                   <Redirect to="/" />
                 </Switch>
               </div>
@@ -63,7 +66,7 @@ function App() {
 
         </div>
       </div>
-      {/* </Home> */}
+      
     </div>
   );
   //TODO - tratar erro de conexão no server

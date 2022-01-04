@@ -9,8 +9,7 @@ body {
   background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
   padding-left: 5rem;
   padding-right: 5rem;
-  padding-top: 10px; 
-  
+  padding-top: 10px;
 }
 
 #loginform {
@@ -49,14 +48,14 @@ body {
   padding-bottom: 1rem;
   box-shadow: inset 0px -3px 0px 0px rgba(187, 187, 187, 0.2);
   transition: box-shadow 0.2s ease-in;
-
 }
 
-.esqueceu-senha{
+.esqueceu-senha {
   font-weight: 600;
   font-size: small;
   align-self: end;
   padding-right: 2rem;
+
 }
 .row input:focus {
   box-shadow: inset 0px -3px 0px 0px rgba(34, 193, 195, 0.7);
@@ -79,7 +78,7 @@ body {
   font-size: large;
   font-weight: 600;
 
-  .label-login{    
+  .label-login {
     align-self: start;
     padding-left: 1.5rem;
     padding-bottom: 0.5rem;
@@ -105,6 +104,15 @@ body {
   opacity: 0.8;
 }
 
+.forgot-senha:hover {
+       opacity: 0.5;
+  
+}
+
+.label-forgot-senha {
+  padding-bottom: 15px !important;
+}
+
 #button {
   padding-bottom: 1.5rem;
 }
@@ -119,10 +127,11 @@ body {
 
 .validation {
   border-radius: 16px;
-  width: 200px;
   padding-left: 20px;
   font-family: "Lato";
+  display: flex;
   p {
+    width: 270px;
     margin-bottom: -15px;
     margin-top: revert;
     color: #822a2a;
@@ -130,6 +139,14 @@ body {
     background-color: #f9abab;
     border-radius: 24px;
     text-align: center;
+  }
+
+  &.sucess {
+    p {
+      width: 100% !important;
+      color: rgb(0, 0, 0) !important;
+      background-color: rgba(0, 139, 139, 0.692) !important;
+    }
   }
 }
 
@@ -141,40 +158,40 @@ body {
   }
 }
 
- .ui.circular{
+.ui.circular {
   width: 150px;
 }
 
-
 .general-background {
-  background-color: rgba(0, 0, 0, .20) !important; 
-  label, p,h3{
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  label,
+  p,
+  h3 {
     color: white !important;
-  } 
-   // filter: blur(2px);
+  }
+  // filter: blur(2px);
 
-   &.ajusteColuna{
-     display: inline-flex;
+  &.ajusteColuna {
+    display: inline-flex;
 
-     button{
-       margin-bottom: 20px;
-     }
-   }
+    button {
+      margin-bottom: 20px;
+    }
+  }
 }
 
-.general-title{
-  font-family: 'Lato';
-  font-size: x-large  !important;
+.general-title {
+  font-family: "Lato";
+  font-size: x-large !important;
   -webkit-text-stroke: thin;
 }
 
-
 .myButon {
-  // background-color: rgba(0, 0, 0, .15) !important; 
-    h3{
-      color:black !important;
-    }
-   width: 160px !important;
+  // background-color: rgba(0, 0, 0, .15) !important;
+  h3 {
+    color: black !important;
+  }
+  width: 160px !important;
   // height: 30px;
   // border-radius: 10px;
   display: flex;
@@ -194,6 +211,4 @@ body {
   border: 2px;
   cursor: pointer;
   transition: opacity 0.25s ease-out;
- 
-
 }

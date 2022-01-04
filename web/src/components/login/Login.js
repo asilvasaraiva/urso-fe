@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AxiosRequest from '../AxiosRequest';
 import Spinner from '../Spinner';
+import ForgotPassword from '../ForgotPassword/ForgotPassword';
 
 
 import './Login.scss';
@@ -28,7 +29,7 @@ async function loginUser(credentials, setErroActive, setErroConexao) {
 }
 
 
-export default function Login({ setToken }) {
+export default function Login({ setToken,setForgot }) {
      let history = useHistory(); 
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
@@ -71,7 +72,10 @@ export default function Login({ setToken }) {
         setErroConexao(false);
     }
 
-   
+    function teste(){
+        history.push("/forgot");
+        setForgot(true);
+    }
 
     return ( //FORM NOVO
         <div id="loginform">
@@ -97,7 +101,7 @@ export default function Login({ setToken }) {
                     {/* <div className={`validation ${erroActive ? 'error' : ''}`}> */}
                         <input type="password" onChange={e => setPassword(e.target.value)} placeholder="****" />
                     {/* </div> */}
-                    <label className="esqueceu-senha" >Esqueceu a senha?</label>
+                    <label className="esqueceu-senha forgot-senha" onClick={()=> teste()}>Esqueceu a senha?</label>
                 </div>
                 <div id="button" className="row" >
                     <button type="submit" >Login</button>
