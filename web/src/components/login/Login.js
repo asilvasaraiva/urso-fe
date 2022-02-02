@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AxiosRequest from '../AxiosRequest';
 import Spinner from '../Spinner';
-import ForgotPassword from '../ForgotPassword/ForgotPassword';
+import { GoogleLogin } from 'react-google-login';
 
 
 import './Login.scss';
@@ -39,7 +39,9 @@ export default function Login({ setToken,setForgot }) {
     const [isNotAdmin, setIsNotAdmin] = useState(false);
 
 
-
+    const responseGoogle = (response) => {
+        console.log(response);
+      }
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -119,10 +121,24 @@ export default function Login({ setToken,setForgot }) {
                     <i className="facebook icon"></i>
                     Facebook
                 </button>
-                <button className="ui circular google negative button">
+                {/* <button className="ui circular google negative button"> */}
+                <GoogleLogin
+                clientId="378194819067-jfjibmvnlal7fai4p2eo8fru1k16ean1.apps.googleusercontent.com"
+                buttonText="Login"
+                render={renderProps => (
+                    <button className="ui circular google negative button"                  
+                     onClick={renderProps.onClick} 
+                     disabled={renderProps.disabled}>
                     <i className="google  icon"></i>
                     Google
-                </button>
+                     </button>
+                  )}
+                // className="google-button"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+  />
+                {/* </button> */}
             </div>
         </div>
     )
