@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import AxiosRequest from '../AxiosRequest';
 import Spinner from '../Spinner';
 import { GoogleLogin } from 'react-google-login';
-
-
 import './Login.scss';
+
+
 
 async function loginUser(credentials, setErroActive, setErroConexao) {
     return AxiosRequest.post('/auth/login/', JSON.stringify(credentials), {
@@ -39,6 +39,7 @@ export default function Login({ setToken,setForgot }) {
     const [isNotAdmin, setIsNotAdmin] = useState(false);
 
 
+    console.log(process.env.REACT_APP_ID_GOOGLE);
     const responseGoogle = (response) => {
         console.log(response);
       }
@@ -123,7 +124,7 @@ export default function Login({ setToken,setForgot }) {
                 </button>
                 {/* <button className="ui circular google negative button"> */}
                 <GoogleLogin
-                clientId="378194819067-jfjibmvnlal7fai4p2eo8fru1k16ean1.apps.googleusercontent.com"
+                clientId={process.env.REACT_APP_ID_GOOGLE}
                 buttonText="Login"
                 render={renderProps => (
                     <button className="ui circular google negative button"                  
