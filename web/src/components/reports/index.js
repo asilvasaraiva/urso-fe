@@ -2,9 +2,9 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 
-const Reports = ({isLogged,myToken})=>{
+const Reports = ({ isLogged, myToken }) => {
 
-  if(!isLogged){    
+  if (!isLogged) {
     window.location.reload();
   }
 
@@ -13,9 +13,15 @@ const Reports = ({isLogged,myToken})=>{
   // }
 
   return (
-    <div className="ui horizontal divider header">
-      <i className="chart line icon"></i>
-      Relatórios      
+    <div className="ui container">
+      <div className="ui horizontal divider header">
+        <i className="chart line icon"></i>
+        Relatórios
+      </div>
+
+      <div className='ui segment center aligned general-background'>
+      <i class="big info circle icon"></i> Em breve 
+      </div>
     </div>
   )
 };
