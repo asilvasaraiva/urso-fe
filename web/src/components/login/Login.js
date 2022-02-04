@@ -5,10 +5,12 @@ import Spinner from '../Spinner';
 import { GoogleLogin } from 'react-google-login';
 import './Login.scss';
 
+const URL_AUTH_SPRING = '/auth/login/';
+const URL_OAUTH2 = '/oauth2/authenticate';
 
 
-async function loginUser(credentials, setErroActive, setErroConexao) {
-    return AxiosRequest.post('/auth/login/', JSON.stringify(credentials), {
+async function loginUser(credentials, setErroActive, setErroConexao, path) {
+    return AxiosRequest.post(path, JSON.stringify(credentials), {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -29,8 +31,8 @@ async function loginUser(credentials, setErroActive, setErroConexao) {
 }
 
 
-export default function Login({ setToken,setForgot }) {
-     let history = useHistory(); 
+export default function Login({ setToken, setForgot }) {
+    let history = useHistory();
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
     const [erroActive, setErroActive] = useState(false);
@@ -39,10 +41,32 @@ export default function Login({ setToken,setForgot }) {
     const [isNotAdmin, setIsNotAdmin] = useState(false);
 
 
-    console.log(process.env.REACT_APP_ID_GOOGLE);
-    const responseGoogle = (response) => {
-        console.log(response);
-      }
+
+
+    const responseGoogle = async (response) => {
+        var profile = response.profileObj;
+        let oauthRequest = {
+            "username": profile.email,
+            "provider": "google",
+            "name": profile.givenName,
+            "surname": profile.familyName,
+            "idProvider": profile.googleId
+        }
+
+        const token = await loginUser(oauthRequest, setErroActive, setErroConexao,URL_OAUTH2);
+        setSpinActive(false);
+        if (token !== undefined) {
+            if (token.roles[0] === "ADMIN") {
+                sessionStorage.setItem('token', JSON.stringify(token));
+                setToken(token);
+                history.push("/");
+            } else {
+                console.log("Usuário não é admin")
+                setIsNotAdmin(true);
+            }
+        }
+
+    }
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -50,13 +74,13 @@ export default function Login({ setToken,setForgot }) {
         const token = await loginUser({
             username,
             password
-        }, setErroActive, setErroConexao);
+        }, setErroActive, setErroConexao,URL_AUTH_SPRING);
         setSpinActive(false);
 
         if (token !== undefined) {
             if (token.roles[0] === "ADMIN") {
                 sessionStorage.setItem('token', JSON.stringify(token));
-                 setToken(token);
+                setToken(token);
                 history.push("/");
             } else {
                 console.log("Usuário não é admin")
@@ -75,14 +99,14 @@ export default function Login({ setToken,setForgot }) {
         setErroConexao(false);
     }
 
-    function teste(){
+    function teste() {
         history.push("/forgot");
         setForgot(true);
     }
 
     return ( //FORM NOVO
         <div id="loginform">
-            <h3 id="headerTitle">   Bem Vindo!!     
+            <h3 id="headerTitle">   Bem Vindo!!
             </h3>
             <form onSubmit={handleSubmit}>
                 <div className="row">
@@ -90,27 +114,27 @@ export default function Login({ setToken,setForgot }) {
                         Meu email:
                     </label>
                     {/* <div className={`validation ${erroActive ? 'error' : ''}`}> */}
-                        <input
-                            type="text"
-                            onChange={e => setUserName(e.target.value)}
-                            placeholder="email@email.com"
-                            onFocus={() => changePermission()} />
+                    <input
+                        type="text"
+                        onChange={e => setUserName(e.target.value)}
+                        placeholder="email@email.com"
+                        onFocus={() => changePermission()} />
                     {/* </div> */}
                 </div>
                 <div className="row label-login inline">
                     <label className="senha">
-                    Minha senha:
+                        Minha senha:
                     </label>
                     {/* <div className={`validation ${erroActive ? 'error' : ''}`}> */}
-                        <input type="password" onChange={e => setPassword(e.target.value)} placeholder="****" />
+                    <input type="password" onChange={e => setPassword(e.target.value)} placeholder="****" />
                     {/* </div> */}
-                    <label className="esqueceu-senha forgot-senha" onClick={()=> teste()}>Esqueceu a senha?</label>
+                    <label className="esqueceu-senha forgot-senha" onClick={() => teste()}>Esqueceu a senha?</label>
                 </div>
                 <div id="button" className="row" >
                     <button type="submit" >Login</button>
                     {erroActive && <div className="validation"><p>Credenciais inválidas</p></div>}
-                    {isNotAdmin && <div  className="validation"><p>Conta informada não é um adminstrador</p></div>}
-                    {erroConexao && <div  className="validation"><p>Falha de conexão com o servidor, tente novamente em instantes</p></div>}
+                    {isNotAdmin && <div className="validation"><p>Conta informada não é um adminstrador</p></div>}
+                    {erroConexao && <div className="validation"><p>Falha de conexão com o servidor, tente novamente em instantes</p></div>}
                 </div>
             </form>
 
@@ -122,23 +146,22 @@ export default function Login({ setToken,setForgot }) {
                     <i className="facebook icon"></i>
                     Facebook
                 </button>
-                {/* <button className="ui circular google negative button"> */}
                 <GoogleLogin
-                clientId={process.env.REACT_APP_ID_GOOGLE}
-                buttonText="Login"
-                render={renderProps => (
-                    <button className="ui circular google negative button"                  
-                     onClick={renderProps.onClick} 
-                     disabled={renderProps.disabled}>
-                    <i className="google  icon"></i>
-                    Google
-                     </button>
-                  )}
-                // className="google-button"
-                onSuccess={responseGoogle}
-                onFailure={responseGoogle}
-                cookiePolicy={'single_host_origin'}
-  />
+                    clientId={process.env.REACT_APP_ID_GOOGLE}
+                    buttonText="Login"
+                    render={renderProps => (
+                        <button className="ui circular google negative button"
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}>
+                            <i className="google  icon"></i>
+                            Google
+                        </button>
+                    )}
+                    // className="google-button"
+                    onSuccess={responseGoogle}
+                    onFailure={responseGoogle}
+                    cookiePolicy={'single_host_origin'}
+                />
                 {/* </button> */}
             </div>
         </div>
