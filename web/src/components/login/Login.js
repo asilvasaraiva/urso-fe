@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import AxiosRequest from '../AxiosRequest';
 import Spinner from '../Spinner';
 import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import './Login.scss';
 
 const URL_AUTH_SPRING = '/auth/login/';
@@ -42,6 +43,19 @@ export default function Login({ setToken, setForgot }) {
 
 
 
+    const responseFacebook = async (response) => {
+        console.log(response);
+        let name = response.name.split(" ")
+        let oauthRequest = {
+            "username": response.email,
+            "provider": response.graphDomain,
+            "name": name[0],
+            "surname": name[1],
+            "idProvider": response.userID
+        }
+        const token = await loginUser(oauthRequest, setErroActive, setErroConexao, URL_OAUTH2); 
+        validateTokent(token);
+    }
 
     const responseGoogle = async (response) => {
         var profile = response.profileObj;
@@ -52,20 +66,8 @@ export default function Login({ setToken, setForgot }) {
             "surname": profile.familyName,
             "idProvider": profile.googleId
         }
-
-        const token = await loginUser(oauthRequest, setErroActive, setErroConexao,URL_OAUTH2);
-        setSpinActive(false);
-        if (token !== undefined) {
-            if (token.roles[0] === "ADMIN") {
-                sessionStorage.setItem('token', JSON.stringify(token));
-                setToken(token);
-                history.push("/");
-            } else {
-                console.log("Usuário não é admin")
-                setIsNotAdmin(true);
-            }
-        }
-
+        const token = await loginUser(oauthRequest, setErroActive, setErroConexao, URL_OAUTH2);        
+        validateTokent(token);
     }
 
     const handleSubmit = async e => {
@@ -74,9 +76,13 @@ export default function Login({ setToken, setForgot }) {
         const token = await loginUser({
             username,
             password
-        }, setErroActive, setErroConexao,URL_AUTH_SPRING);
+        }, setErroActive, setErroConexao, URL_AUTH_SPRING);
         setSpinActive(false);
+        validateTokent(token);
+        
+    }
 
+    const validateTokent = (token)=>{
         if (token !== undefined) {
             if (token.roles[0] === "ADMIN") {
                 sessionStorage.setItem('token', JSON.stringify(token));
@@ -88,6 +94,7 @@ export default function Login({ setToken, setForgot }) {
             }
         }
     }
+
 
     if (spinActive) {
         return <Spinner />;
@@ -141,11 +148,17 @@ export default function Login({ setToken, setForgot }) {
             <div className="ui horizontal divider">
                 Ou
             </div>
-            <div className="ui center aligned basic segment">
-                <button className="ui circular facebook button">
-                    <i className="facebook icon"></i>
-                    Facebook
-                </button>
+            <div className="ui center aligned basic segment">                
+                <FacebookLogin
+                    appId={process.env.REACT_APP_ID_FACEBOOK}
+                    autoLoad={false}
+                    callback={responseFacebook}
+                    fields="name,email"
+                    cssClass="ui circular facebook  button"
+                    icon="fa-facebook"
+                    textButton="  Facebook"                    
+                />
+
                 <GoogleLogin
                     clientId={process.env.REACT_APP_ID_GOOGLE}
                     buttonText="Login"
@@ -156,13 +169,11 @@ export default function Login({ setToken, setForgot }) {
                             <i className="google  icon"></i>
                             Google
                         </button>
-                    )}
-                    // className="google-button"
+                    )}                    
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     cookiePolicy={'single_host_origin'}
                 />
-                {/* </button> */}
             </div>
         </div>
     )
